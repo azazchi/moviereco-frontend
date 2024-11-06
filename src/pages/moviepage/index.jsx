@@ -36,7 +36,7 @@ export default function MoviePage() {
         <>
             <div className="space-y-2">
                 <div>
-                    <strong>Title:</strong> {data.title}
+                    <strong>Tite:</strong> {data.title}
                 </div>
                 <div>
                     <strong>Overview:</strong> {data.overview}
@@ -54,7 +54,7 @@ export default function MoviePage() {
                     <strong>Director:</strong> {data.director}
                 </div>
                 <div>
-                    <strong>Genre:</strong> {data.genre}
+                    <strong>Genre:</strong> {data.genre}    
                 </div>
                 <div>
                     <strong>Language:</strong> {data.language}
