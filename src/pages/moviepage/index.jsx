@@ -7,8 +7,22 @@ async function fetchSingleMovie(movie_id) {
     return res;
 }
 
+async function fetchMovieImage(movie_title) {
+    const res = await axios.get(`/movie/image`, {
+        params: {
+            title: movie_title,
+        },
+    });
+    return res;
+}
+
 export default function MoviePage() {
     const { movie_id } = useParams();
+
+    const [img, setImg] = useState({
+        url: "",
+        isLoading: true,
+    });
 
     const [movie, setMovie] = useState({
         isLoading: true,
@@ -18,10 +32,22 @@ export default function MoviePage() {
     useEffect(() => {
         if (movie.isLoading) {
             fetchSingleMovie(movie_id).then((res) => {
-                setMovie({
-                    isLoading: false,
-                    data: res.data.data,
-                });
+                if (res.status == 200) {
+                    setMovie({
+                        isLoading: false,
+                        data: res.data.data,
+                    });
+                    if (img.isLoading) {
+                        fetchMovieImage(res.data.data.title).then(
+                            (response) => {
+                                setImg({
+                                    isLoading: false,
+                                    url: response.data.url,
+                                });
+                            }
+                        );
+                    }
+                }
             });
         }
     }, []);
@@ -35,6 +61,7 @@ export default function MoviePage() {
     return (
         <>
             <div className="space-y-2">
+                <img src={img.url} alt="move image" />
                 <div>
                     <strong>Tite:</strong> {data.title}
                 </div>
